@@ -4,7 +4,7 @@ defmodule SymphonyElixir.MixProject do
   def project do
     [
       app: :symphony_elixir,
-      version: "0.0.3",
+      version: "0.0.5",
       elixir: "~> 1.19",
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -74,13 +74,14 @@ defmodule SymphonyElixir.MixProject do
       {:lazy_html, ">= 0.1.0", only: :test},
       {:phoenix, "~> 1.8.0"},
       {:phoenix_html, "~> 4.2"},
-      {:phoenix_live_view, "~> 1.1.0"},
+      {:phoenix_live_view, "~> 1.1"},
       {:req, "~> 0.5"},
+      {:castore, "~> 1.0"},
       {:jason, "~> 1.4"},
       {:yaml_elixir, "~> 2.12"},
       {:solid, "~> 1.2"},
       {:ecto, "~> 3.13"},
-      {:burrito, "~> 1.5", only: :prod, runtime: false},
+      {:burrito, "~> 1.5.0", only: :prod, runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev], runtime: false}
     ]
@@ -111,7 +112,12 @@ defmodule SymphonyElixir.MixProject do
           targets: [
             macos_arm64: [os: :darwin, cpu: :aarch64],
             macos_x86_64: [os: :darwin, cpu: :x86_64],
-            linux_arm64: [os: :linux, cpu: :aarch64],
+            linux_arm64: [
+              os: :linux,
+              cpu: :aarch64,
+              # Allows a local cross-build to use the latest published ARM64 ERTS archive.
+              custom_erts: System.get_env("SYMPHONY_LINUX_ARM64_CUSTOM_ERTS")
+            ],
             linux_x86_64: [os: :linux, cpu: :x86_64]
           ]
         ]

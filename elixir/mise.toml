@@ -1,3 +1,4 @@
 [tools]
-erlang = "28"
+# Keep Erlang aligned with a Burrito precompiled ERTS release for every target.
+erlang = "28.5.0.6"
 elixir = "1.19.5-otp-28"
